@@ -16,14 +16,14 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Your ML workflow goes here
-          pip install -r gereklikutuphaneler.txt
-          python kalphastaligi.py
+          pip install -r operasyonel/gereklikutuphaneler.txt
+          python operasyonel/kalphastaligi.py
           
           echo "## Model Metrikleri" >> rapor.md
-          cat metrikler.txt >> rapor.md
+          cat operasyonel/metrikler.txt >> rapor.md
 
           echo "## Veri Görselleri" >> rapor.md
-          echo "![](./ozellik_onem.png)" >> rapor.md
+          echo "![](./operasyonel/ozellik_onem.png)" >> rapor.md
           #  echo "![](./*********)" >> rapor.md
 
           cml comment create rapor.md
