@@ -27,6 +27,14 @@ jobs:
       - name: Modeli egit
         run: python operasyonel/kalphastaligi.py
 
+      - name: Grafigi yukle
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-raporu
+          path: |
+            metrikler.txt
+            ozellik_onem.png
+
       - name: CML raporu olustur ve yorum olarak yayinla
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,6 +42,6 @@ jobs:
           echo "## Model Metrikleri" >> rapor.md
           cat metrikler.txt >> rapor.md
           echo "" >> rapor.md
-          echo "## Veri Gorselleri" >> rapor.md
-          echo "![](./ozellik_onem.png)" >> rapor.md
-          cml comment create --publish rapor.md
+          echo "Ozellik onemi grafigi: [model-raporu artifact](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> rapor.md
+          cat rapor.md >> "$GITHUB_STEP_SUMMARY"
+          cml comment create rapor.md
