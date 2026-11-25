@@ -3,7 +3,12 @@
 Kalp hastaligin teshisi icin random forest algoritmasinin kullanimi
 """
 
-import pandas as pd 
+from pathlib import Path
+
+import matplotlib
+matplotlib.use("Agg")  # ekransiz (headless) ortam icin
+
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -13,14 +18,13 @@ import seaborn as sns
 #random sayi uretim katsayisi
 seed = 13
 
+# Yollar: betigin nerede calistirildigindan bagimsiz (repo koku / operasyonel)
+BASE_DIR = Path(__file__).resolve().parent
+ROOT_DIR = BASE_DIR.parent
+
 # veri setinin yüklenmesi
-df = pd.read_csv("heart.csv")
+df = pd.read_csv(BASE_DIR / "heart.csv")
 
-
-# Sayisal olmayan özelliklerin tespiti
-
-categorical_columns = df.select_dtypes(include=['object', 'category']).columns
-categorical_columns
 
 
 # Sayisal ozelliklere donusturulmesi
@@ -56,7 +60,7 @@ train_score = model.score(X_train, y_train) * 100
 test_score = model.score(X_test, y_test) * 100
 
 # Metrikleri dosyaya yazdirma
-with open("metrikler.txt", 'w') as outfile:
+with open(ROOT_DIR / "metrikler.txt", 'w', encoding="utf-8") as outfile:
         outfile.write("Egitim Dogruluk Degeri: %2.1f%%\n" % train_score)
         outfile.write("Test Dogruluk Degeri: %2.1f%%\n" % test_score)
 
@@ -83,7 +87,7 @@ ax.set_ylabel('Özellikler', fontsize = axis_fs)#ylabel
 ax.set_title('Random forest\nözellik önemi', fontsize = title_fs)
 
 plt.tight_layout()
-plt.savefig("ozellik_onem.png",dpi=120) 
+plt.savefig(ROOT_DIR / "ozellik_onem.png", dpi=120) 
 plt.close()
 
 

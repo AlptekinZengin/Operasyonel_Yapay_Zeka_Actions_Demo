@@ -1,0 +1,39 @@
+name: random-forest-hastalik-teshisi
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - uses: iterative/setup-cml@v2
+
+      - name: Bagimliliklari kur
+        run: pip install -r requirements.txt
+
+      - name: Modeli egit
+        run: python operasyonel/kalphastaligi.py
+
+      - name: CML raporu olustur ve yorum olarak yayinla
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## Model Metrikleri" >> rapor.md
+          cat metrikler.txt >> rapor.md
+          echo "" >> rapor.md
+          echo "## Veri Gorselleri" >> rapor.md
+          echo "![](./ozellik_onem.png)" >> rapor.md
+          cml comment create --publish rapor.md

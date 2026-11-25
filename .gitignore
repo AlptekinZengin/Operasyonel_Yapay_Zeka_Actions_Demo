@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Uretilen ciktilar (CI sirasinda olusturulur)
+metrikler.txt
+ozellik_onem.png
+rapor.md
