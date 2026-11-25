@@ -44,7 +44,7 @@ Betik ekransız (headless) ortamlarda çalışması için matplotlib'in `Agg` ar
 3. `iterative/setup-cml` ile CML aracı kurulur.
 4. `requirements.txt` içindeki bağımlılıklar yüklenir.
 5. `python operasyonel/kalphastaligi.py` ile model eğitilir.
-6. Metrikler ve özellik önem grafiği `rapor.md` dosyasında birleştirilir, `cml comment create --publish` ile ilgili commit'e (veya pull request'e) yorum olarak eklenir.
+6. Metrikler ve grafik `model-raporu` adıyla iş akışı çıktısı (artifact) olarak yüklenir; metrikler ve grafiğe bağlantı `rapor.md` dosyasında birleştirilip `cml comment create` ile ilgili commit'e (veya pull request'e) yorum olarak eklenir.
 
 Yorum için ek bir anahtar gerekmez; iş akışı yerleşik `GITHUB_TOKEN` değerini kullanır (`contents: write`, `pull-requests: write` izinleri tanımlıdır).
 
